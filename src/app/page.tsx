@@ -83,52 +83,67 @@ export default function Home() {
       <br />
       <br />
       <div>
-        <p>Search</p>
+        <label htmlFor="search-input">Search advocates:</label>
         <p>
           Searching for: <span>{searchTerm}</span>
         </p>
         <input
+          id="search-input"
           style={{ border: "1px solid black" }}
           value={searchTerm}
           onChange={handleSearchChange}
           placeholder="Search advocates..."
+          aria-describedby="search-description"
         />
         <button onClick={handleResetSearch}>Reset Search</button>
+        <div
+          id="search-description"
+          style={{ fontSize: "0.8em", color: "#666" }}
+        >
+          Search by name, city, degree, specialties, or years of experience
+        </div>
       </div>
       <br />
       <br />
-      <table>
-        <thead>
-          <tr>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>City</th>
-            <th>Degree</th>
-            <th>Specialties</th>
-            <th>Years of Experience</th>
-            <th>Phone Number</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredAdvocates.map((advocate) => {
-            return (
-              <tr key={advocate.id}>
-                <td>{advocate.firstName}</td>
-                <td>{advocate.lastName}</td>
-                <td>{advocate.city}</td>
-                <td>{advocate.degree}</td>
-                <td>
-                  {advocate.specialties.map((specialty, index) => (
-                    <div key={index}>{specialty}</div>
-                  ))}
-                </td>
-                <td>{advocate.yearsOfExperience}</td>
-                <td>{advocate.phoneNumber.toString()}</td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+      <div>
+        <h2>Advocate Directory</h2>
+        <p>
+          Found {filteredAdvocates.length} advocate
+          {filteredAdvocates.length !== 1 ? "s" : ""}
+        </p>
+        <table role="table" aria-label="Advocates directory">
+          <thead>
+            <tr>
+              <th scope="col">First Name</th>
+              <th scope="col">Last Name</th>
+              <th scope="col">City</th>
+              <th scope="col">Degree</th>
+              <th scope="col">Specialties</th>
+              <th scope="col">Years of Experience</th>
+              <th scope="col">Phone Number</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredAdvocates.map((advocate, index) => {
+              return (
+                <tr key={advocate.id || index}>
+                  <td>{advocate.firstName}</td>
+                  <td>{advocate.lastName}</td>
+                  <td>{advocate.city}</td>
+                  <td>{advocate.degree}</td>
+                  <td>
+                    {advocate.specialties.map((specialty, specialtyIndex) => (
+                      <div key={specialtyIndex}>{specialty}</div>
+                    ))}
+                  </td>
+                  <td>{advocate.yearsOfExperience}</td>
+                  <td>{advocate.phoneNumber.toString()}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
     </main>
   );
 }
