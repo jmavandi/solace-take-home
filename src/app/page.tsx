@@ -123,7 +123,7 @@ export default function Home() {
                   ))}
                 </td>
                 <td>{advocate.yearsOfExperience}</td>
-                <td>{advocate.phoneNumber}</td>
+                <td>{advocate.phoneNumber.toString()}</td>
               </tr>
             );
           })}
